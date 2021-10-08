@@ -1,4 +1,5 @@
-import 'package:bloc_demo/Screens/user_detail.dart';
+import 'package:bloc_demo/Data/network_calls.dart';
+import 'package:bloc_demo/Models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
@@ -28,21 +29,43 @@ class MainScreen extends StatelessWidget {
     }
   ];
 
+  final api = NetworkCalls();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Main Screen'),
       ),
-      body: ListView(
-        children: [
-          ...FAKE_DATA.map((e) => InkWell(
-                onTap: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (ctx) => UserDetail())),
-                child: Text('$e'),
-              ))
-        ],
-      ),
+      body: FutureBuilder(
+          initialData: [User(id: 0, name: '', email: '', phoneNumber: '')],
+          future: api.fetchUsers(),
+          builder: (_, snapshot) {
+            print('esnacho: ${snapshot.data}');
+            final data = snapshot.data as List<User>;
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return ListView(
+              children: [
+                ...data.map((user) => userWidget(user: user, context: context))
+              ],
+            );
+          }),
     );
   }
+}
+
+Widget userWidget({required User user, required BuildContext context}) {
+  return Card(
+    child: ListTile(
+      onTap: () {
+        Navigator.pushNamed(context, '/user_detail', arguments: user);
+      },
+      title: Text(user.name),
+    ),
+  );
 }
