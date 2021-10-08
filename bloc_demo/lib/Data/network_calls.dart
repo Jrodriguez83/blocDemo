@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class NetworkCalls {
   final url = Uri.parse('https://jsonplaceholder.typicode.com/users');
 
-  Future<List<User>?> fetchUsers() async {
+  Future<List<User>> fetchUsers() async {
     try {
       List<User> _users;
       final _response = await http.get(url);
@@ -22,7 +22,9 @@ class NetworkCalls {
 
       return _users;
     } catch (e) {
+      // ignore: avoid_print
       print('error: $e');
+      return [];
     }
   }
 }
