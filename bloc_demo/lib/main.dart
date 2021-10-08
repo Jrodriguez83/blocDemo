@@ -1,4 +1,3 @@
-import 'package:bloc_demo/Screens/main_screen.dart';
 import 'package:bloc_demo/Screens/router.dart';
 import 'package:flutter/material.dart';
 
