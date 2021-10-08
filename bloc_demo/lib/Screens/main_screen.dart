@@ -35,13 +35,12 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Main Screen'),
+        title: const Text('User Viewer'),
       ),
       body: FutureBuilder(
           initialData: [User(id: 0, name: '', email: '', phoneNumber: '')],
           future: api.fetchUsers(),
-          builder: (_, snapshot) {
-            print('esnacho: ${snapshot.data}');
+          builder: (ctx, snapshot) {
             final data = snapshot.data as List<User>;
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
