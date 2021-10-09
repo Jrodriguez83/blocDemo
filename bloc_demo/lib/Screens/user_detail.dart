@@ -1,4 +1,3 @@
-import 'package:bloc_demo/Models/posts_model.dart';
 import 'package:bloc_demo/Models/user_model.dart';
 import 'package:bloc_demo/cubit/post_cubit.dart';
 import 'package:flutter/material.dart';
