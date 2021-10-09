@@ -1,6 +1,7 @@
 import 'package:bloc_demo/Models/user_model.dart';
 import 'package:bloc_demo/Screens/main_screen.dart';
 import 'package:bloc_demo/Screens/user_detail.dart';
+import 'package:bloc_demo/cubit/post_cubit.dart';
 import 'package:bloc_demo/cubit/user_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,5 +28,8 @@ MaterialPageRoute mainScreen() => MaterialPageRoute(
           child: MainScreen(),
         ));
 
-MaterialPageRoute userDetail(User user) =>
-    MaterialPageRoute(builder: (_) => UserDetail(user: user));
+MaterialPageRoute userDetail(User user) => MaterialPageRoute(
+    builder: (_) => BlocProvider(
+          create: (_) => PostCubit(user: user),
+          child: UserDetail(user: user),
+        ));
