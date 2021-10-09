@@ -5,6 +5,11 @@ import 'package:meta/meta.dart';
 
 part 'user_state.dart';
 
+enum AppBarMode {
+  title,
+  searchBox,
+}
+
 class UserCubit extends Cubit<UserState> {
   UserCubit() : super(UserInitial());
 
@@ -13,5 +18,13 @@ class UserCubit extends Cubit<UserState> {
     calls
         .fetchUsers()
         .then((userList) => emit(UsersLoaded(userList: userList)));
+  }
+
+  AppBarMode setAppBarMode(AppBarMode appBarMode) {
+    if (appBarMode == AppBarMode.title) {
+      return AppBarMode.searchBox;
+    } else {
+      return AppBarMode.title;
+    }
   }
 }
